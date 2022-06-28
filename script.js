@@ -28,7 +28,6 @@ for(i = 0; i < allImages.length; i++){
             selectedBtn.style.display = "none";
             score++;
             scoreElement.innerText = "score: " + score;
-
         }
     }
 }
