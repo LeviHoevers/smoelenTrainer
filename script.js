@@ -1,9 +1,13 @@
 var selectedBtn = "";
 var selectedImage = "";
 
-var scoreElement = document.getElementById("score")
-var score = 0;
+var agents = ["astra", "chamber", "jett", "skye", "viper", "kayo", "sova", "reyna", "raze", "killjoy"];
 
+shuffleArray(agents, 10);
+console.log(agents);
+
+var scoreElement = document.getElementById("score");
+var score = 0;
 
 allBtns = document.querySelectorAll(".button");
 allImages = document.querySelectorAll(".image");
@@ -30,5 +34,17 @@ for(i = 0; i < allImages.length; i++){
             scoreElement.innerText = "score: " + score;
 
         }
+    }
+}
+
+function shuffleArray(array, shuffle){
+    for(i = 0; i < shuffle; i++){
+        for (var j = array.length - 1; j > 0; j--) {
+            var x = Math.floor(Math.random() * (j + 1));
+            var temp = array[j];
+            array[j] = array[x];
+            array[x] = temp;
+        }
+
     }
 }
