@@ -2,6 +2,7 @@ var imageContainer = document.getElementById("imageContainer");
 var buttonContainer = document.getElementById("buttonContainer");
 
 var scoreElement = document.getElementById("score");
+var score = 0;
 
 var selectedBtn = "";
 var selectedImg = "";
@@ -62,9 +63,8 @@ function shuffle(array, shuffleAmount){
 }
 
 function createElements(array){
-    var score = 0;
 
-    shuffle(agents, 6);
+    shuffle(array, 6);
     for(i = 0; i < array.length; i++){
         var img = document.createElement("img");
         img.src = array[i]["src"];
@@ -93,7 +93,7 @@ function createElements(array){
         imageContainer.appendChild(img);
     }
 
-    shuffle(agents, 6)
+    shuffle(array, 6)
     for(i = 0; i < array.length; i++){
         var button = document.createElement("button");
         button.innerHTML = array[i]["agent"];
