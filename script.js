@@ -1,7 +1,13 @@
 var imageContainer = document.getElementById("imageContainer");
 var buttonContainer = document.getElementById("buttonContainer");
+var startButton = document.getElementById("startButton");
 
 var scoreElement = document.getElementById("score");
+scoreElement.style.display = "none";
+
+var timer = document.getElementById("timer");
+timer.style.display = "none";
+
 var score = 0;
 
 var selectedBtn = "";
@@ -50,6 +56,21 @@ var agents = [
     },
 ]
 
+var difficulty = [
+    {
+        mode: "easy",
+        time: 60
+    },
+    {
+        mode: "normal",
+        time: 30
+    },
+    {
+        mode: "hard",
+        time: 15
+    }
+]
+
 function shuffle(array, shuffleAmount){
     for(i = 0; i < shuffleAmount; i++){
         for(j = 0; j < array.length; j++){
@@ -82,7 +103,7 @@ function createElements(array){
                 score++;
                 scoreElement.innerText = "score: " + score;
                 if (score == array.length){
-                    console.log("you win")
+                    console.log("you win");
                 }
                 }
                 else{
@@ -111,7 +132,7 @@ function createElements(array){
                     score++;
                     scoreElement.innerText = "score: " + score;
                     if (score == array.length){
-                        console.log("you win")
+                        console.log("you win");
                     }
                 }
                 else{
@@ -123,4 +144,31 @@ function createElements(array){
     }
 }
 
-createElements(agents);
+function startTimer(difficulty){
+    var time = difficulty;
+    timer.innerText = time;
+    var countDown = setInterval(function(){
+        timer.innerText = time -1;
+        time--;
+        if(time == 0){
+            clearInterval(countDown);
+            gameOver();
+        }
+    }, 1000);
+}
+
+function gameOver(){
+    imageContainer.style.display = "none";
+    buttonContainer.style.display = "none";
+}
+
+
+startButton.onclick = function startGame(){
+    startButton.style.display = "none";
+    scoreElement.style.display = "block";
+    timer.style.display = "block";
+    createElements(agents);
+    startTimer(3);
+}
+
+
