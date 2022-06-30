@@ -1,5 +1,6 @@
 var imageContainer = document.getElementById("imageContainer");
 var buttonContainer = document.getElementById("buttonContainer");
+var logo = document.getElementById("logo");
 var startButton = document.getElementById("startButton");
 
 var scoreElement = document.getElementById("score");
@@ -164,11 +165,14 @@ function gameOver(){
 
 
 startButton.onclick = function startGame(){
+
     startButton.style.display = "none";
+    logo.style.display = "none";
     scoreElement.style.display = "block";
     timer.style.display = "block";
     createElements(agents);
-    startTimer(3);
+    startTimer(5);
+
 }
 
 
