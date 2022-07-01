@@ -1,3 +1,6 @@
+<!-- #1F232F
+#777C72 -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,12 +13,22 @@
 <body style="background: #101823;">
 
     <main class="border-top border-bottom border-danger my-4 p-3" style="width: 100vw; display: flex; flex-direction: column;">
-        <img id="logo" src="images/valorant.png" class=".img-fluid mx-auto" style="max-width: 50%;" alt="">
+        <img id="logo" src="images/valorant.png" class=".img-fluid mx-auto m-2" style="max-width: 50%;" alt="">
         <h1 id="score" style="color:white;" class="text-center">score: 0</h1>
+        <p id="wrong" style="color:white;" class="text-center">wrong: 0</p>
         <p id="timer" style="color:white;" class="text-center"></p>
         <div id="imageContainer" class="images-container text-center"></div>
         <div id="buttonContainer" class="button-container text-center">
             <button id="startButton" class="btn-lg btn-danger m-3">Start</button>
+        </div>
+
+        
+        <div id="gameOver" class="text-center p-3" style="display: none; background: #1F232F; color:white;">
+            <h1 id="result" class="p-3 mb-3" style="border-bottom: 1px solid white;"></h1>  
+            <p id="timeLeft"></p>
+            <p id="finalScore"></p>
+            <p id="finalWrong" class="pb-3" style="border-bottom: 1px solid white;"></p>
+            <button id="restartButton" class="btn-lg btn-danger m-3">Restart</button> 
         </div>
     </main>
 

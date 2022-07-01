@@ -1,15 +1,29 @@
 var imageContainer = document.getElementById("imageContainer");
 var buttonContainer = document.getElementById("buttonContainer");
+
 var logo = document.getElementById("logo");
 var startButton = document.getElementById("startButton");
+var restartButton = document.getElementById("restartButton");
+
+var gameOverContainer = document.getElementById("gameOver");
+var result = document.getElementById("result");
+var timeLeftElement = document.getElementById("timeLeft");
+
+var finalScore = document.getElementById("finalScore");
+var finalWrong = document.getElementById("finalWrong");
 
 var scoreElement = document.getElementById("score");
 scoreElement.style.display = "none";
 
+var wrongElement = document.getElementById("wrong");
+wrongElement.style.display = "none";
+
 var timer = document.getElementById("timer");
 timer.style.display = "none";
 
+var timeLeft = 0;
 var score = 0;
+var wrong = 0;
 
 var selectedBtn = "";
 var selectedImg = "";
@@ -92,9 +106,9 @@ function createElements(array){
         img.src = array[i]["src"];
         img.dataset.agent = array[i]["agent"];
         img.classList.add("border", "border-secondary", "rounded", "m-2");
+        img.style.height = "225px";
         img.onclick = function(){
             selectedImg = this;
-            console.log(this);
             if(selectedBtn != "" && selectedImg != ""){
                 if(selectedBtn.dataset.agent == selectedImg.dataset.agent){
                 this.style.display = "none";
@@ -103,12 +117,9 @@ function createElements(array){
                 selectedBtn = "";
                 score++;
                 scoreElement.innerText = "score: " + score;
-                if (score == array.length){
-                    console.log("you win");
-                }
                 }
                 else{
-                console.log("wrong");
+                    wrongMatch();
                 } 
             }    
         }
@@ -123,7 +134,6 @@ function createElements(array){
         button.classList.add("btn-lg", "btn-danger", "m-3");
         button.onclick = function() {
             selectedBtn = this;
-            console.log(this);
             if(selectedBtn != "" && selectedImg != ""){
                 if(selectedBtn.dataset.agent == selectedImg.dataset.agent){
                     this.style.display = "none";
@@ -132,17 +142,21 @@ function createElements(array){
                     selectedBtn = "";
                     score++;
                     scoreElement.innerText = "score: " + score;
-                    if (score == array.length){
-                        console.log("you win");
-                    }
                 }
                 else{
-                    console.log("wrong");
+                    wrongMatch();
                 }
             }
         }
         buttonContainer.appendChild(button);
     }
+}
+
+function wrongMatch(){
+    wrong++
+    wrongElement.innerText = "wrong: " + wrong;
+    selectedImg = "";
+    selectedBtn = "";
 }
 
 function startTimer(difficulty){
@@ -151,7 +165,8 @@ function startTimer(difficulty){
     var countDown = setInterval(function(){
         timer.innerText = time -1;
         time--;
-        if(time == 0){
+        timeLeft = time;
+        if(time == 0 || score == 10){
             clearInterval(countDown);
             gameOver();
         }
@@ -161,18 +176,45 @@ function startTimer(difficulty){
 function gameOver(){
     imageContainer.style.display = "none";
     buttonContainer.style.display = "none";
+    scoreElement.style.display = "none";
+    timer.style.display = "none";
+    wrongElement.style.display = "none";
+    gameOverContainer.style.display = "block";
+    if(score == 10){
+        result.innerText = "You win!";
+    }
+    else{
+        result.innerText = "Nice try.";
+    }
+    timeLeftElement.innerText = "Time Left: " + timeLeft;
+    finalScore.innerText = "score: " + score;
+    finalWrong.innerText = "wrong: " + wrong;
 }
 
+startButton.onclick = startGame;
 
-startButton.onclick = function startGame(){
+function startGame(){
+    gameOverContainer.style.display = "none";
+    scoreElement.innerText = "score: 0";
+    wrongElement.innerText = "wrong: 0";
 
+    imageContainer.style.display = "block";
+    buttonContainer.style.display = "block";
+    imageContainer.innerHTML = "";
+    buttonContainer.innerHTML = "";
+
+    timeLeft = 0;
+    score = 0;
+    wrong = 0;
     startButton.style.display = "none";
     logo.style.display = "none";
     scoreElement.style.display = "block";
+    wrongElement.style.display = "block";
     timer.style.display = "block";
     createElements(agents);
     startTimer(5);
-
 }
+
+restartButton.onclick = startGame;
 
 
