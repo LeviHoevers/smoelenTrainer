@@ -5,12 +5,24 @@ var logo = document.getElementById("logo");
 var startButton = document.getElementById("startButton");
 var restartButton = document.getElementById("restartButton");
 
+var dropDownButton = document.getElementById("dropDownButton");
+var dropDownContainer = document.getElementById("dropDownContainer");
+dropDownContainer.style.display = "none";
+var condition = "hidden";
+
+var easyButton = document.getElementById("easyButton");
+var normalButton = document.getElementById("normalButton");
+var hardButton = document.getElementById("hardButton");
+
 var gameOverContainer = document.getElementById("gameOver");
 var result = document.getElementById("result");
 var timeLeftElement = document.getElementById("timeLeft");
 
+var selectedDiff = document.getElementById("selectedDiff");
+
 var finalScore = document.getElementById("finalScore");
 var finalWrong = document.getElementById("finalWrong");
+var highScoreElement = document.getElementById("highScoreElement");
 
 var scoreElement = document.getElementById("score");
 scoreElement.style.display = "none";
@@ -22,8 +34,11 @@ var timer = document.getElementById("timer");
 timer.style.display = "none";
 
 var timeLeft = 0;
+var highScore = 0;
 var score = 0;
 var wrong = 0;
+
+var mode = 1;
 
 var selectedBtn = "";
 var selectedImg = "";
@@ -73,18 +88,45 @@ var agents = [
 
 var difficulty = [
     {
-        mode: "easy",
+        name: "Easy",
         time: 60
     },
     {
-        mode: "normal",
+        name: "Normal",
         time: 30
     },
     {
-        mode: "hard",
+        name: "Hard",
         time: 15
     }
 ]
+
+dropDownButton.onclick = function dropDown(){
+    console.log("yes")
+    if(condition == "hidden"){
+        dropDownContainer.style.display = "block";
+        condition = "visible";
+    }
+    else if(condition == "visible"){
+        dropDownContainer.style.display = "none";
+        condition = "hidden";
+    }
+}
+
+easyButton.onclick = function selectEasy(){
+    mode = 0;
+    selectedDiff.innerText = "selected: " + difficulty[mode].name;
+}
+
+normalButton.onclick = function selectNormal(){
+    mode = 1;
+    selectedDiff.innerText = "selected: " + difficulty[mode].name;
+}
+
+hardButton.onclick = function selectHard(){
+    mode = 2;
+    selectedDiff.innerText = "selected: " + difficulty[mode].name;
+}
 
 function shuffle(array, shuffleAmount){
     for(i = 0; i < shuffleAmount; i++){
@@ -160,13 +202,13 @@ function wrongMatch(){
 }
 
 function startTimer(difficulty){
-    var time = difficulty;
+    var time = difficulty.time;
     timer.innerText = time;
     var countDown = setInterval(function(){
-        timer.innerText = time -1;
+        timer.innerText = time - 1;
         time--;
         timeLeft = time;
-        if(time == 0 || score == 10){
+        if(time == 0 || score == agents.length){
             clearInterval(countDown);
             gameOver();
         }
@@ -180,20 +222,27 @@ function gameOver(){
     timer.style.display = "none";
     wrongElement.style.display = "none";
     gameOverContainer.style.display = "block";
-    if(score == 10){
+    if(score == agents.length){
         result.innerText = "You win!";
     }
     else{
         result.innerText = "Nice try.";
     }
+    if(highScore <= score){
+        highScore = score;
+    }
+    highScoreElement.innerText = "High Score: " + highScore;
     timeLeftElement.innerText = "Time Left: " + timeLeft;
     finalScore.innerText = "score: " + score;
     finalWrong.innerText = "wrong: " + wrong;
+    highScoreElement.innerText
 }
 
 startButton.onclick = startGame;
 
 function startGame(){
+    dropDownContainer.style.display = "none";
+    dropDownButton.style.display = "none";
     gameOverContainer.style.display = "none";
     scoreElement.innerText = "score: 0";
     wrongElement.innerText = "wrong: 0";
@@ -212,7 +261,7 @@ function startGame(){
     wrongElement.style.display = "block";
     timer.style.display = "block";
     createElements(agents);
-    startTimer(5);
+    startTimer(difficulty[mode]);
 }
 
 restartButton.onclick = startGame;

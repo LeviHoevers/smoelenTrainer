@@ -17,14 +17,23 @@
         <h1 id="score" style="color:white;" class="text-center">score: 0</h1>
         <p id="wrong" style="color:white;" class="text-center">wrong: 0</p>
         <p id="timer" style="color:white;" class="text-center"></p>
-        <div id="imageContainer" class="images-container text-center"></div>
-        <div id="buttonContainer" class="button-container text-center">
+        <div id="imageContainer" class=" text-center"></div>
+        <div id="buttonContainer" class=" text-center">
             <button id="startButton" class="btn-lg btn-danger m-3">Start</button>
         </div>
-
+        <div class="text-center p-0">
+            <p id="selectedDiff" style="color: white;">selected: Normal</p>
+            <button class="btn-lg btn-danger m-2 text-center" id="dropDownButton">Difficulty</button>
+            <ul id="dropDownContainer" class="text-center" style="list-style-type: none; padding: 0;">
+                <li><button id="easyButton" class="btn-lg btn-success mb-2">Easy</button></li>
+                <li><button id="normalButton" class="btn-lg btn-warning mb-2">Normal</button></li>
+                <li><button id="hardButton" class="btn-lg btn-danger mb-2">Hard</button></li>
+            </ul>
+        </div>
         
         <div id="gameOver" class="text-center p-3" style="display: none; background: #1F232F; color:white;">
-            <h1 id="result" class="p-3 mb-3" style="border-bottom: 1px solid white;"></h1>  
+            <h1 id="result" class="p-3 mb-3" style="border-bottom: 1px solid white;"></h1> 
+            <p id="highScoreElement"></p> 
             <p id="timeLeft"></p>
             <p id="finalScore"></p>
             <p id="finalWrong" class="pb-3" style="border-bottom: 1px solid white;"></p>
